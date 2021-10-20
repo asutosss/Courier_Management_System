@@ -1,0 +1,87 @@
+Create database courier;
+use courier;
+
+CREATE TABLE `courier`.`BookingTable` (
+  
+`BId` INT NOT NULL AUTO_INCREMENT,
+ 
+ `ToName` VARCHAR(100) NOT NULL,
+ 
+ `ToAddress` Varchar(50) NOT NULL,
+ 
+ `ToPin` INT NOT NULL DEFAULT 0,
+  `CourWeight` VARCHAR(45) NOT NULL,
+  
+`CourType` VARCHAR(45) NOT NULL,
+    
+`Amount` double NOT NULL DEFAULT 0,
+ 
+ 
+`FromName` VARCHAR(45) NOT NULL,
+`FromAddress` VARCHAR(45) NOT NULL,
+`FromContact` VARCHAR(45) NOT NULL DEFAULT 0,
+`date` datetime,
+ PRIMARY KEY (`BId`));
+
+
+
+
+
+CREATE TABLE `courier`.`branchTable`(
+`Id` INT NOT NULL AUTO_INCREMENT , 
+`branchcode` Varchar(50) NOT NULL,
+`branchName` Varchar(50) NOT NULL,
+`branchAddress`varchar(150) NOT NULL,
+`Bpin`Varchar(15) NOT NULL,
+Key (`branchcode`),
+primary Key (`Id`));
+
+
+
+
+CREATE TABLE `staffTable`(
+`SId` INT NOT NULL AUTO_INCREMENT , 
+`BCode` Varchar(50) NOT NULL,
+`StaffName` Varchar(50) NOT NULL,
+`StaffContact`Varchar(15) NOT NULL,
+`StaffAddress`varchar(150) NOT NULL,
+primary Key (`SId`), 
+
+ INDEX par_ind (BCode),
+  CONSTRAINT fk_branchTable FOREIGN KEY (BCode)
+  	REFERENCES Branchtable (branchcode)
+		ON DELETE CASCADE
+  		ON UPDATE CASCADE );
+
+
+
+CREATE TABLE `sheduleTable`(
+`ShId` INT NOT NULL AUTO_INCREMENT ,
+`date` datetime, 
+`cournum` Varchar(50) NOT NULL,
+`branchcode` Varchar(50) NOT NULL,
+`staffname` Varchar(15) NOT NULL,
+primary Key (`ShId`)); 
+
+
+CREATE TABLE `DeliveryTable`(
+`DId` INT NOT NULL AUTO_INCREMENT ,
+`courNumber` Varchar(50) NOT NULL, 
+`branchcode` Varchar(50) NOT NULL,
+`staffname` Varchar(50) NOT NULL,
+`deliveredTo` Varchar(50) NOT NULL,
+`Ddate` datetime,
+primary Key (`DId`)); 
+
+
+
+
+
+
+// truncate table which has foreign key contraints.
+
+SET FOREIGN_KEY_CHECKS = 0;
+truncate tableName;
+SET FOREIGN_KEY_CHECKS = 1;
+
+// done.
